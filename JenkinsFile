@@ -1,0 +1,47 @@
+pipeline {
+   agent any
+    provaN3EC = "$WORKSPACE/fabio/prova_ec_n3-jenkins-Fabio_Augusto"
+
+    environment{
+
+    }
+
+    stage('Criando wrapper para o gradle') {
+      steps{
+          echo 'Criando wrapper para o gradle'
+          sh 'echo $provaN3EC'{
+            dir("provaN3EC"){
+                sh'gradle wrapper'
+            }
+          }
+      }
+   }
+   stage('testes de unidade') {
+     steps{
+         echo 'rodando testes de unidade'
+         dir("$provaN3EC"){
+             sh './gradlew test'
+         }
+     }
+
+   }
+   stage('Fazer build do APK') {
+       steps {
+           echo 'rodando ao assemble'
+           dir("$provaN3EC"){
+               sh './gradlew assembleRelease'
+           }
+       }
+
+   }
+
+   stage('arquivar o apk') {
+       steps{
+           echo 'arquivando apk'
+           dir("$provaN3EC"){
+               archiveArtifacts artifacts: '', fingerprint: true , allowEmptyArchive: true
+           }
+       }
+
+   }
+}
