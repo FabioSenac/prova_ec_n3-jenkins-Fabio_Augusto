@@ -1,6 +1,6 @@
 pipeline {
    agent any
-    provaN3EC = "$WORKSPACE/fabio/prova_ec_n3-jenkins-Fabio_Augusto"
+    provaN3EC = "$WORKSPACE/prova_ec_n3-jenkins-Fabio_Augusto"
 
     environment{
 
